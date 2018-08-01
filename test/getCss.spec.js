@@ -13,11 +13,13 @@ import getCss from '../src/getCss';
 
 // Mock function for returning module content
 function toString() {
-    return this.map((module) => {
-        if (module[1]) {
-            return module[1];
-        }
-    }).join("");
+  return this.map((module) => {
+    if (module[1]) {
+      return module[1];
+    }
+
+    return module;
+  }).join('');
 }
 const module1 = [1, 'body { color: red; }'];
 const module2 = [2, '.app { font-family: Helvetica, sans-serif; }'];
