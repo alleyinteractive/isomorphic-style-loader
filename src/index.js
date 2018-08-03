@@ -17,11 +17,9 @@ module.exports.pitch = function pitch(remainingRequest) {
   }
 
   const insertCssPath = path.join(__dirname, './insertCss.js');
-  const getCssPath = path.join(__dirname, './getCss.js');
   return `
     var content = require(${stringifyRequest(this, `!!${remainingRequest}`)});
     var insertCss = require(${stringifyRequest(this, `!${insertCssPath}`)});
-    var getCss = require(${stringifyRequest(this, `!${getCssPath}`)});
 
     if (typeof content === 'string') {
       content = [[module.id, content, '']];
@@ -29,9 +27,9 @@ module.exports.pitch = function pitch(remainingRequest) {
 
     module.exports = content.locals || {};
     module.exports._getContent = function() { return content; };
-    module.exports._getCss = function() { return getCss(content); };
+    module.exports._getCss = function() { return content.toString(); };
     module.exports._insertCss = function(options) { return insertCss(content, options) };
-
+    
     // Hot Module Replacement
     // https://webpack.github.io/docs/hot-module-replacement
     // Only activated in browser context
