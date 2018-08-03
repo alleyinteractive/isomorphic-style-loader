@@ -6,6 +6,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE.txt file in the root directory of this source tree.
  */
+
 const prefix = 's';
 const inserted = {};
 
@@ -41,9 +42,12 @@ function removeCss(ids) {
  *   removeCss();
  */
 function insertCss(styles, { replace = false, prepend = false } = {}) {
+  const ids = [];
   for (let i = 0; i < styles.length; i++) {
     const [moduleId, css, media, sourceMap] = styles[i];
     const id = moduleId;
+
+    ids.push(id);
 
     if (inserted[id]) {
       if (!replace) {
@@ -91,7 +95,7 @@ function insertCss(styles, { replace = false, prepend = false } = {}) {
     }
   }
 
-  return removeCss.bind(null, Object.keys(inserted));
+  return removeCss.bind(null, ids);
 }
 
 module.exports = insertCss;
